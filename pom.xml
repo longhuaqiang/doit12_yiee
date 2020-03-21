@@ -15,6 +15,7 @@
         <module>commons</module>
     </modules>
 
+
     <properties>
         <spark.version>2.3.4</spark.version>
         <scala.version>2.11.12</scala.version>
