@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="Maven 1" modules="doit12_yiee">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="E:\workspace\doit12_yiee\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 2" modules="commons">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="E:\workspace\doit12_yiee\commons\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 3" modules="recommend">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="E:\workspace\doit12_yiee\recommend\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 4" modules="dataware">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="E:\workspace\doit12_yiee\dataware\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 5" modules="userprofile">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="E:\workspace\doit12_yiee\userprofile\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+  </component>
+</project>
