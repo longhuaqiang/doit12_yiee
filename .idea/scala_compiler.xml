@@ -31,5 +31,11 @@
         <parameter value="E:\workspace\doit12_yiee\userprofile\target/.scala_dependencies" />
       </parameters>
     </profile>
+    <profile name="Maven 6" modules="olap_web">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="E:\workspace\doit12_yiee\olap_web\target/.scala_dependencies" />
+      </parameters>
+    </profile>
   </component>
 </project>
