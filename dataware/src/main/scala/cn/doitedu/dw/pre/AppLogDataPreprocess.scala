@@ -7,8 +7,7 @@ import cn.doitedu.dw.beans.AppLogBean
 import com.alibaba.fastjson.{JSON, JSONObject}
 import org.apache.commons.lang3.StringUtils
 import org.apache.spark.broadcast.Broadcast
-import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
+import org.apache.spark.sql.{ Dataset, Row, SparkSession}
 
 /**
   * Created by ChenLongWen on 2020/4/29.
@@ -37,7 +36,6 @@ object AppLogDataPreprocess {
 
     //加载idmp映射字典,并收集到driver端,然后广播出去
     val idmp = spark.read.parquet("data/idmp/2020-01-12")
-
       .rdd
       .map({
         case Row(biaoshi_hashcode: Long, guid: Long) => {
