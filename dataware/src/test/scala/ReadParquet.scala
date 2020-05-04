@@ -1,3 +1,5 @@
+import cn.doitedu.commons.util.SparkUtils
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
@@ -5,11 +7,11 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
   */
 object ReadParquet {
   def main(args: Array[String]): Unit = {
-    val spark: SparkSession = SparkSession.builder().appName(this.getClass.getSimpleName).master("local[*]").getOrCreate()
-
+    Logger.getLogger("org").setLevel(Level.WARN)
+    val spark: SparkSession = SparkUtils.getSparkSession(this.getClass.getSimpleName)
     import spark.implicits._
 
-    val df: DataFrame = spark.read.parquet("E:\\data\\dict\\geo_dict\\output")
+    val df: DataFrame = spark.read.parquet("data/idmp/2020-01-12")
 
     df.show(10,false)
 

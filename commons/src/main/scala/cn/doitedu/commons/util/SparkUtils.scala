@@ -14,7 +14,7 @@ object SparkUtils {
     SparkSession.builder()
       .appName(appName)
       .master(master)
-      .config(conf)
+//      .config(conf)
       .getOrCreate()
 
   }
