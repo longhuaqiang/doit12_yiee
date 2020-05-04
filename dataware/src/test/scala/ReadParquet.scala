@@ -11,6 +11,7 @@ object ReadParquet {
     val spark: SparkSession = SparkUtils.getSparkSession(this.getClass.getSimpleName)
     import spark.implicits._
 
+
     val df: DataFrame = spark.read.parquet("data/applog_processed/2020-01-12")
 
     df.show(10,false)
