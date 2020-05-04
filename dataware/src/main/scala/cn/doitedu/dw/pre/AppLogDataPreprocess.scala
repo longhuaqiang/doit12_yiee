@@ -37,6 +37,7 @@ object AppLogDataPreprocess {
 
     //加载idmp映射字典,并收集到driver端,然后广播出去
     val idmp = spark.read.parquet("data/idmp/2020-01-12")
+
       .rdd
       .map({
         case Row(biaoshi_hashcode: Long, guid: Long) => {
