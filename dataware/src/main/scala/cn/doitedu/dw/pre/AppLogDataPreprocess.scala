@@ -2,12 +2,13 @@ package cn.doitedu.dw.pre
 
 import java.util
 
+import ch.hsr.geohash.GeoHash
 import cn.doitedu.commons.util.SparkUtils
 import cn.doitedu.dw.beans.AppLogBean
 import com.alibaba.fastjson.{JSON, JSONObject}
 import org.apache.commons.lang3.StringUtils
 import org.apache.spark.broadcast.Broadcast
-import org.apache.spark.sql.{ Dataset, Row, SparkSession}
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 /**
   * Created by ChenLongWen on 2020/4/29.
@@ -144,22 +145,41 @@ object AppLogDataPreprocess {
     })
       //如果数据符合要求,就返回一个AppLogBean,如果不符合要求,就返回一个null,在下一步中过滤掉
       .filter(_ != null)
-      /*.map(bean => {
-
+      .map(bean => {
+        val geo = bc_geo.value
+        val idmp: collection.Map[Long, Long] = bc_idmp.value
         //数据集成 -->省市区
+        // 查geo地域字典，填充省市区
+        val lat: Double = bean.latitude
+        val lng: Double = bean.longtitude
+        val mygeo: String = GeoHash.geoHashStringWithCharacterPrecision(lat, lng, 6)
+        val maybeTuple: Option[(String, String, String, String)] = geo.get(mygeo)
+        if (maybeTuple.isDefined) {
+          val areaName: (String, String, String, String) = maybeTuple.get
+          bean.province = areaName._1
+          bean.city = areaName._2
+          bean.district = areaName._3
+          bean.country = areaName._4
+        }
 
         //数据集成 -->guid
-
-
-        null
-      })*/
+        // 查id映射字典，填充guid
+        val ids = Array(bean.imei, bean.imsi, bean.mac, bean.androidId, bean.uuid, bean.uid)
+        var find = false
+        for (elem <- ids if !find) {
+          val maybeLong: Option[Long] = idmp.get(elem.hashCode.toLong)
+          if (maybeLong.isDefined) {
+            bean.guid = maybeLong.get
+            find = true
+          }
+        }
+        bean
+      })
+      .filter(bean => bean.guid != Long.MinValue)
       .toDF()
-    res.show(10, false)
-    /*.write
-    .parquet("")*/
-
-
-
+//      .show(50, false)
+      .write
+      .parquet("data/applog_processed/2020-01-12")
 
     spark.close()
   }
